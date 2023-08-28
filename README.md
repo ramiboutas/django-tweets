@@ -6,6 +6,11 @@ This packages takes the advantage of the [tweepy](https://www.tweepy.org/) funct
 The tweets objects can have media files as well.
 
 
+![django-tweets. Twitter account]()
+
+[<img align="center"  width="100%"  src="images/logo_large.png">](https://twitter.com/django_tweets)
+
+
 ## Set up
 
 
@@ -149,8 +154,6 @@ Answer:
 3. Configure the the form and submit.
 
 ![User authentication settings](images/app_user_permissions.png)
-
-
 
 
 
