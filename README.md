@@ -155,11 +155,8 @@ Answer:
 
 
 
-
-
-
 ## About
 
-
+[🐣 django_tweets](https://twitter.com/django_tweets)
 
 ©Django is a registered trademark of the Django Software Foundation.
