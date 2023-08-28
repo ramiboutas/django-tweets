@@ -20,12 +20,13 @@ The tweets objects can have media files as well.
 
 ### django-tweets
 
-* Install from PyPI
+
+1. Install from PyPI
 ```
 python -m pip install django-tweets
 ```
 
-Add the package to your settins INSTALLED_APPS
+2. Add the package to your settins INSTALLED_APPS
 
 ```python
 
@@ -38,7 +39,9 @@ INSTALLED_APPS = [
 ```
 
 
-Add the following settings to your Django project.
+
+
+3. Add the following settings to your Django project.
 
 | Django setting              | Description                                                                 | Required |
 |-----------------------------|-----------------------------------------------------------------------------|----------|
@@ -73,6 +76,16 @@ TWITTER_CLIENT_ID = os.environ.get("TWITTER_CLIENT_ID")
 TWITTER_CLIENT_SECRET = os.environ.get("TWITTER_CLIENT_SECRET")
 
 ```
+
+
+4. Run migrations
+
+```
+python manage.py migrate
+
+```
+
+
 
 ## Usage
 
