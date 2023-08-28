@@ -8,7 +8,17 @@ The tweets objects can have media files as well.
 
 ## Set up
 
-### Install django-tweets
+
+### Twitter Account
+
+1. Make sure you have a Twitter account.
+2. Go to the [Twitter Developer Portal](https://developer.twitter.com/en/portal/dashboard).
+3. Create a Project and an App
+4. Make sure your App has read and write permissions.
+5. Genenerate the necessary secrets and token.
+
+
+### django-tweets
 
 * Install from PyPI
 ```
@@ -27,17 +37,6 @@ INSTALLED_APPS = [
 
 ```
 
-
-### Twitter Account
-
-1. Make sure you have a Twitter account.
-2. Go to the [Twitter Developer Portal](https://developer.twitter.com/en/portal/dashboard).
-3. Create a Project and an App
-4. Make sure your App has read and write permissions.
-5. Genenerate the necessary secrets and token.
-
-
-### Settings
 
 Add the following settings to your Django project.
 
