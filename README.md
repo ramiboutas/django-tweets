@@ -1,4 +1,6 @@
 # django-tweets
+[<img align="center"  width="100%"  src="images/logo_large.png">](https://twitter.com/django_tweets)
+
 Create and delete tweets in a Django project.
 
 This packages takes the advantage of the [tweepy](https://www.tweepy.org/) functionalies to connect it to a Django Backend.
@@ -6,9 +8,6 @@ This packages takes the advantage of the [tweepy](https://www.tweepy.org/) funct
 The tweets objects can have media files as well.
 
 
-![django-tweets. Twitter account]()
-
-[<img align="center"  width="100%"  src="images/logo_large.png">](https://twitter.com/django_tweets)
 
 
 ## Set up
