@@ -7,7 +7,6 @@ from django.utils.functional import cached_property
 
 from django.conf import settings
 
-
 from .clients import get_v2_client
 from .clients import get_v1dot1_api
 
@@ -26,10 +25,6 @@ class MediaFile(models.Model):
     file = models.FileField(
         _("File"),
         upload_to=_upload_path,
-    )
-    upload = models.BooleanField(
-        _("Upload to Twitter"),
-        default=True,
     )
     created_at = models.DateTimeField(
         _("Created at"),
@@ -69,8 +64,8 @@ class MediaFile(models.Model):
         self.expires_at = timezone.now() + timezone.timedelta(
             seconds=response.expires_after_secs
         )
-        self.upload = False
         self.save()
+        return self
 
     @cached_property
     def file_extension(self):
@@ -80,11 +75,6 @@ class MediaFile(models.Model):
         # generate title from file name if not provided
         if self.title == "" or self.title is None:
             self.title = self.file.name
-
-        # upload when user indicates so
-        if self.upload:
-            self.upload_file()
-
         super(MediaFile, self).save(*args, **kwargs)
 
     def __str__(self) -> str:
@@ -130,12 +120,6 @@ class Tweet(models.Model):
         self.save()
         return self
 
-    def save(self, *args, **kwargs):
-        # getting media files
-        # super(Tweet, self).save(*args, **kwargs)
-
-        super(Tweet, self).save(*args, **kwargs)
-
     def __str__(self) -> str:
         return "%s %s" % (self.id_string, self.text)
 
@@ -152,3 +136,17 @@ class TweetPublication(models.Model):
         if self.publish:
             self.tweet.publish()
         super(TweetPublication, self).save(*args, **kwargs)
+
+
+class MediaFileUpload(models.Model):
+    """
+    A Model to handle MediaFile upload in Django Admin.
+    """
+
+    mediafile = models.OneToOneField(MediaFile, on_delete=models.CASCADE)
+    upload = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if self.publish:
+            self.mediafile.upload_file()
+        super(MediaFileUpload, self).save(*args, **kwargs)

@@ -81,14 +81,12 @@ TWITTER_CLIENT_SECRET = os.environ.get("TWITTER_CLIENT_SECRET")
 
 ```
 
-
 4. Run migrations
 
 ```
 python manage.py migrate
 
 ```
-
 
 
 ## Usage
@@ -111,28 +109,31 @@ tweet.publish()
 
 ```python
 from pathlib import Path
-from django.core.files import File
+from django.core.files.base import ContentFile
 from django_tweets.models import Tweet, MediaFile
 
 # create a media file
 path = Path("path/to/my/file.jpg")
-with path.open(mode="rb") as f:
-    mediafile = MediaFile.objects.create(
-      title="nice photo",
-      file=File(f, name=path.name)
-    )
+
+with open(path, "rb") as f:
+    f.seek(0)
+    contents = f.read()
+
+mediafile = MediaFile.objects.create(title="nice photo")
+mediafile.file.save(path.name, ContentFile(contents))
+# upload to Twitter
+mediafile = mediafile.upload_file()
 
 # create a tweet in the db
-tweet = Tweet.objects.create(text="Hi, this is my tweet using django-tweets and tweepy")
+tweet = Tweet.objects.create(text="My tweet with a file")
 
-## add the media file to the tweet object
+# add the media file to the tweet object
 tweet.files.add(mediafile)
 
 # publish it
 tweet.publish()
 
 ```
-
 
 
 
@@ -153,7 +154,6 @@ Answer:
 3. Configure the the form and submit.
 
 ![User authentication settings](images/app_user_permissions.png)
-
 
 
 

@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import MediaFile
+from .models import MediaFileUpload
 from .models import Tweet
 from .models import TweetPublication
 
@@ -37,3 +38,13 @@ class TweetPublicationAdmin(admin.ModelAdmin):
 
     list_display = ("tweet", "publish")
     list_filter = ("publish",)
+
+
+@admin.register(MediaFileUpload)
+class MediaFileUploadAdmin(admin.ModelAdmin):
+    """
+    ModelAdmin for MediaFileUpload
+    """
+
+    list_display = ("mediafile", "upload")
+    list_filter = ("upload",)
