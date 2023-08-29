@@ -5,7 +5,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = "django-tweets"
-version = "0.0.3"
+version = "0.0.4"
 authors = [{ name = "Rami", email = "ramiboutas@protonmail.com" }]
 description = "An app to manage tweets in a Django project"
 readme = "README.md"
@@ -22,7 +22,7 @@ dependencies = ["tweepy", "django"]
 
 [tool.setuptools]
 
-packages = ["django_tweets"]
+packages = ["django_tweets", "django_tweets.migrations"]
 
 [project.urls]
 "Homepage" = "https://github.com/ramiboutas/django-tweets"
