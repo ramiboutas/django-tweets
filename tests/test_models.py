@@ -6,9 +6,8 @@ from django.core.files.base import ContentFile
 
 
 from django_tweets.models import Tweet
-from django_tweets.models import MediaFile
+from django_tweets.models import TweetFile
 from django_tweets.models import TweetPublication
-from django_tweets.clients import get_v2_client
 
 from unittest_parametrize import parametrize
 from unittest_parametrize import ParametrizedTestCase
@@ -23,13 +22,13 @@ class TweetModelTests(ParametrizedTestCase):
     def setUp(self):
         # Setup run before every test method.
         Tweet.objects.all().delete()
-        MediaFile.objects.all().delete()
+        TweetFile.objects.all().delete()
         TweetPublication.objects.all().delete()
 
     def tearDown(self):
         # Clean up run after every test method.
         Tweet.objects.all().delete()
-        MediaFile.objects.all().delete()
+        TweetFile.objects.all().delete()
         TweetPublication.objects.all().delete()
 
     def test_create_and_delete_tweet(self):
@@ -52,9 +51,9 @@ class TweetModelTests(ParametrizedTestCase):
         with open(path, "rb") as f:
             f.seek(0)
             contents = f.read()
-        mediafile = MediaFile.objects.create(title="nice photo")
+        mediafile = TweetFile.objects.create(title="nice photo")
         mediafile.file.save(path.name, ContentFile(contents))
-        mediafile = mediafile.upload_file()
+        mediafile = mediafile.upload()
         tweet = Tweet.objects.create(
             text="%s Testing a tweet with a %s file" % (now_str, extension)
         )

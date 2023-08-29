@@ -3,7 +3,7 @@
 
 Create and delete tweets in a Django project.
 
-This packages takes the advantage of the [tweepy](https://www.tweepy.org/) functionalies to connect it to a Django Backend.
+This packages takes the advantage of the [tweepy](https://www.tweepy.org/) functionalities to connect it to a Django Backend.
 
 The tweets objects can have media files as well.
 
@@ -105,12 +105,12 @@ tweet = Tweet.objects.create(text="Hi, this is my tweet using django-tweets and 
 tweet.publish()
 
 ```
-### Create a simple tweet with a media file
+### Create a tweet with a media file
 
 ```python
 from pathlib import Path
 from django.core.files.base import ContentFile
-from django_tweets.models import Tweet, MediaFile
+from django_tweets.models import Tweet, TweetFile
 
 # create a media file
 path = Path("path/to/my/file.jpg")
@@ -119,24 +119,33 @@ with open(path, "rb") as f:
     f.seek(0)
     contents = f.read()
 
-mediafile = MediaFile.objects.create(title="nice photo")
-mediafile.file.save(path.name, ContentFile(contents))
+tweet_file = TweetFile.objects.create(title="nice photo")
+tweet_file.file.save(path.name, ContentFile(contents))
 # upload to Twitter
-mediafile = mediafile.upload_file()
+tweet_file = tweet_file.upload()
 
 # create a tweet in the db
 tweet = Tweet.objects.create(text="My tweet with a file")
 
 # add the media file to the tweet object
-tweet.files.add(mediafile)
+tweet.files.add(tweet_file)
 
 # publish it
 tweet.publish()
 
 ```
 
+### Usage in the admin
+
+![Django admin](images/admin.png)
+
+* Use [http://127.0.0.1:8000/admin/django_tweets/tweet/](http://127.0.0.1:8000/admin/django_tweets/tweet/) to create a Tweet object
+* Use [http://127.0.0.1:8000/admin/django_tweets/tweetpublication/](http://127.0.0.1:8000/admin/django_tweets/tweetpublication/) to link a Tweet object to publish it.
+
+Similarly works with the `TweetFile` and `TweetFileUpload` models.
 
 
+<!--- this takes to much space in the README...
 
 ## Questions
 * How Can I get the read and write permission for my app?
@@ -154,6 +163,7 @@ Answer:
 3. Configure the the form and submit.
 
 ![User authentication settings](images/app_user_permissions.png)
+-->
 
 
 

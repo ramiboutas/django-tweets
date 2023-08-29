@@ -16,7 +16,7 @@ def _upload_path(_, filename):
     return f"django-tweets/{now.year}/{now.month}/{now.day}/{filename}"
 
 
-class MediaFile(models.Model):
+class TweetFile(models.Model):
     title = models.CharField(
         _("Title"),
         max_length=128,
@@ -51,7 +51,7 @@ class MediaFile(models.Model):
         null=True,
     )
 
-    def upload_file(self):
+    def upload(self):
         # use tempfile to upload the file to the Twitter API.
         # Why tempfile? because not allways media files are not stored locally
         with tempfile.NamedTemporaryFile(suffix="." + self.file_extension) as f:
@@ -75,7 +75,7 @@ class MediaFile(models.Model):
         # generate title from file name if not provided
         if self.title == "" or self.title is None:
             self.title = self.file.name
-        super(MediaFile, self).save(*args, **kwargs)
+        super(TweetFile, self).save(*args, **kwargs)
 
     def __str__(self) -> str:
         return self.title
@@ -88,7 +88,7 @@ class Tweet(models.Model):
         max_length=512, editable=False, blank=True
     )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    files = models.ManyToManyField(MediaFile, blank=True)
+    files = models.ManyToManyField(TweetFile, blank=True)
     response = models.TextField(
         _("Tweepy Response"),
         editable=True,
@@ -138,15 +138,15 @@ class TweetPublication(models.Model):
         super(TweetPublication, self).save(*args, **kwargs)
 
 
-class MediaFileUpload(models.Model):
+class TweetFileUpload(models.Model):
     """
     A Model to handle MediaFile upload in Django Admin.
     """
 
-    mediafile = models.OneToOneField(MediaFile, on_delete=models.CASCADE)
+    mediafile = models.OneToOneField(TweetFile, on_delete=models.CASCADE)
     upload = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if self.publish:
-            self.mediafile.upload_file()
-        super(MediaFileUpload, self).save(*args, **kwargs)
+            self.mediafile.upload()
+        super(TweetFileUpload, self).save(*args, **kwargs)
