@@ -4,3 +4,6 @@ python-dotenv
 ipython
 coverage
 unittest-parametrize
+beautifulsoup4
+requests
+django-auto-prefetch

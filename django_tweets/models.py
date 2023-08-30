@@ -83,9 +83,17 @@ class TweetFile(models.Model):
 
 class Tweet(models.Model):
     text = models.TextField(max_length=4096)
-    id_string = models.CharField(max_length=32, editable=False, blank=True)
+    id_string = models.CharField(
+        max_length=32,
+        editable=False,
+        blank=True,
+        null=True,
+    )
     edit_history_tweet_ids = models.TextField(
-        max_length=512, editable=False, blank=True
+        max_length=512,
+        editable=False,
+        blank=True,
+        null=True,
     )
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     files = models.ManyToManyField(TweetFile, blank=True)
