@@ -15,12 +15,17 @@ headers = {
 
 
 class DjangoNewsIssue(models.Model):
-    title = models.CharField(max_length=128, null=True)
-    date = models.DateField(null=True)
+    issue_id = models.PositiveSmallIntegerField(null=True, blank=True, unique=True)
+    title = models.CharField(max_length=128, null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
 
     @cached_property
     def url(self):
         return "https://django-news.com/issues/%s" % self.id
+
+    @classmethod
+    def get_last_issue_id(cls):
+        return cls.objects.order_by("-issue_id").first().issue_id
 
     def scrap_data(self):
         response = requests.get(self.url)
@@ -47,8 +52,13 @@ class DjangoNewsIssue(models.Model):
         except Exception as e:
             self.delete()
 
+    def save(self, *args, **kwargs):
+        if self.issue_id is None:
+            self.issue_id = DjangoNewsIssue.get_last_issue_id() + 1
+        super(DjangoNewsIssue, self).save(*args, **kwargs)
+
     def __str__(self):
-        return self.title
+        return "%s - %s" % (self.issue_id, self.title)
 
 
 class DjangoNewsIssueItem(auto_prefetch.Model):
