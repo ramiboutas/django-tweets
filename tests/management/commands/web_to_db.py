@@ -11,7 +11,6 @@ class Command(BaseCommand):
         self.stdout.write("Creating objects...")
 
         # Django News scraping (sorry William and Jeff)
-        last_issue = DjangoNewsIssue.objects.last()
-        if last_issue:
+        for _ in range(10):
             issue = DjangoNewsIssue.objects.create()
             issue.scrap_data()
