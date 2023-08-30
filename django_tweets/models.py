@@ -125,6 +125,7 @@ class Tweet(models.Model):
         self.edit_history_tweet_ids = ", ".join(
             response.data.get("edit_history_tweet_ids")
         )
+        self.response = str(response)
         self.save()
         return self
 
