@@ -65,8 +65,9 @@ class DjangoNewsIssueItem(auto_prefetch.Model):
     issue = models.ForeignKey(DjangoNewsIssue, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=128, null=True)
     text = models.TextField(max_length=2096, null=True)
-    url = models.CharField(max_length=128, null=True)
+    url = models.CharField(max_length=256, null=True)
     category = models.CharField(max_length=32, null=True)
+    url_status_code = models.PositiveSmallIntegerField(default=200)
 
     class Meta(auto_prefetch.Model.Meta):
         pass

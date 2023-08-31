@@ -26,15 +26,12 @@ class Command(BaseCommand):
 
         # Creating from Django-News items
         issue_items = DjangoNewsIssueItem.objects.filter(
-            Q(category="Articles") | Q(category="Tutorials")
+            Q(category="Articles") | Q(category="Tutorials"),
+            url_status_code=200,
         )
         tweets = []
         for item in issue_items:
-            tweets.append(
-                Tweet(
-                    text=f"{item.title}\n\n{item.text}\n\n{item.url}\n\n[Credits: Django News]"
-                )
-            )
+            tweets.append(Tweet(text=f"{item.title}\n\n{item.text}\n\n{item.url}"))
 
         Tweet.objects.bulk_create(tweets)
 
