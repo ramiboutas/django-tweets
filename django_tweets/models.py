@@ -26,6 +26,10 @@ class TweetFile(models.Model):
         _("File"),
         upload_to=_upload_path,
     )
+    delete_after_upload = models.BooleanField(
+        _("Delete the file after upload"),
+        default=False,
+    )
     created_at = models.DateTimeField(
         _("Created at"),
         editable=False,
@@ -64,6 +68,8 @@ class TweetFile(models.Model):
         self.expires_at = timezone.now() + timezone.timedelta(
             seconds=response.expires_after_secs
         )
+        if self.delete_after_upload:
+            self.file.delete()
         self.save()
         return self
 

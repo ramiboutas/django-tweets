@@ -31,7 +31,11 @@ class Command(BaseCommand):
         )
         tweets = []
         for item in issue_items:
-            tweets.append(Tweet(text=f"{item.title}\n\n{item.text}\n\n{item.url}"))
+            tweets.append(
+                Tweet(
+                    text=f"{item.title}\n\n{item.text}\n\n{item.url}\n\n[Credits: Django News]"
+                )
+            )
 
         Tweet.objects.bulk_create(tweets)
 
