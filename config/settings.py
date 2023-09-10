@@ -105,12 +105,14 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 ## thid-party apps
 
-# django-tweets (our app)
+############################## django-tweets ##############################
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
+# username
+TWITTER_USERNAME = "django_tweets"
 # Consumer Keys
 TWITTER_API_KEY = os.environ.get("TWITTER_API_KEY")
 TWITTER_API_KEY_SECRET = os.environ.get("TWITTER_API_KEY_SECRET")

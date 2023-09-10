@@ -55,6 +55,10 @@ class TweetFile(models.Model):
         null=True,
     )
 
+    @cached_property
+    def file_extension(self):
+        return self.file.name.split(".")[1]
+
     def upload(self):
         # use tempfile to upload the file to the Twitter API.
         # Why tempfile? because not allways media files are not stored locally
@@ -72,10 +76,6 @@ class TweetFile(models.Model):
             self.file.delete()
         self.save()
         return self
-
-    @cached_property
-    def file_extension(self):
-        return self.file.name.split(".")[1]
 
     def save(self, *args, **kwargs):
         # generate title from file name if not provided
@@ -109,6 +109,14 @@ class Tweet(models.Model):
         blank=True,
         null=True,
     )
+
+    @cached_property
+    def url(self):
+        if getattr(settings, "TWITTER_USERNAME", None) and self.id_string:
+            return "https://twitter.com/%s/status/%s" % (
+                settings.TWITTER_USERNAME,
+                self.id_string,
+            )
 
     def delete(self, *args, **kwargs):
         if getattr(settings, "DJANGO_TWEETS_SYNC_DELETE", True):

@@ -5,6 +5,11 @@ from .models import TweetFileUpload
 from .models import Tweet
 from .models import TweetPublication
 
+from django.conf import settings
+
+
+url_or_id_string = "url" if getattr(settings, "TWITTER_USERNAME", None) else "id_string"
+
 
 @admin.register(Tweet)
 class TweetAdmin(admin.ModelAdmin):
@@ -13,7 +18,7 @@ class TweetAdmin(admin.ModelAdmin):
 
     """
 
-    list_display = ("__str__", "id_string", "created_at")
+    list_display = ("__str__", url_or_id_string, "created_at")
     list_filter = ("created_at",)
     readonly_fields = ("id_string", "edit_history_tweet_ids", "created_at", "response")
     filter_horizontal = ("files",)

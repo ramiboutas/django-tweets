@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 | TWITTER_ACCESS_TOKEN        | Twitter API OAuth 1.0a Access Token                                         | Yes      |
 | TWITTER_ACCESS_TOKEN_SECRET | Twitter API OAuth 1.0a Access Token Secret                                  | Yes      |
 | DJANGO_TWEETS_SYNC_DELETE   | Synchronize object deletion with Twitter API. This is activated by default. | No       |
+| TWITTER_USERNAME            | Useful for accessing to the url of a Tweet object                           | No       |
 
 
 
@@ -67,7 +68,9 @@ load_dotenv()
 
 ...
 
-# django-tweets
+############################## django-tweets ##############################
+# username
+TWITTER_USERNAME = "django_tweets" # https://twitter.com/django_tweets
 # Consumer Keys
 TWITTER_API_KEY = os.environ.get("TWITTER_API_KEY")
 TWITTER_API_KEY_SECRET = os.environ.get("TWITTER_API_KEY_SECRET")
